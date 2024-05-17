@@ -1,7 +1,16 @@
 import axios from 'axios';
 import {useEffect} from 'react';
+import { ReqResUserListResponse } from '../interfaces';
 
-
+const loadUsers = async() => {
+    try{
+        const {data} = await axios.get<ReqResUserListResponse>('https://reqres.in/api/users?page=2');
+        return data.data;
+    }catch (error) {
+        console.log(error);
+        return [];
+    }
+}
 
 
 
@@ -10,9 +19,12 @@ export const UsersPages = () => {
   
   
     useEffect(() => {
-        axios.get('https://reqres.in/api/users?page=2')
-          .then( resp => console.log(resp.data))
-          
+
+        loadUsers().then(users => console.log( users))
+
+        // axios.get<ReqResUserListResponse>('https://reqres.in/api/users?page=2')
+        //   .then( resp => console.log(resp.data.data[0]));
+
 
 
         // fetch('https://reqres.in/api/users?page=2')
